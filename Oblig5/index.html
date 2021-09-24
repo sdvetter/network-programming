@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Network programming Oblig 5</title>
+    <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+
+<div class="grid-container">
+    <div class="codeField">
+            <textarea name="code" id="textArea"></textarea>
+        <button onclick="submitCode()">Send to compile code </button>
+    </div>
+    <!--
+    <div><button type="submit">Send to compile code</button></div>
+    -->
+    <div class="clientOutput" id="clientOutput">
+        <p>
+
+        </p>
+    </div>
+</div>
+
+<script>
+    function submitCode() {
+        let data = {code: document.getElementById("textArea").value}
+        fetch("http://localhost:5000/compile", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((res) => res.json()).then(data => {
+            console.log(data);
+            document.getElementById("clientOutput").innerHTML = data.ans.replaceAll('\n', '<br>');
+        });
+
+    }
+</script>
+
+
+</body>
+</html>
